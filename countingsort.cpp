@@ -43,18 +43,9 @@ int borneMin(int taille, int tab[])
 void countingSort(int taille, int tab[])
 {
 	// Algorithme de tri du tableau avec la methode Counting Sort
-	int min = borneMin(taille, tab);
-	int decalage = 0;
+	int decalage = borneMin(taille, tab);
 	// gestion des nombres negatifs et optimisation du tableau pour les nombre positifs
-	if (min < 0)
-	{
-		decalage = abs(min);
-	}
-	else
-	{
-		decalage = -min;
-	}
-	int const tailleTab2 = borneMax(taille, tab) + decalage + 1;
+	int const tailleTab2 = borneMax(taille, tab) - decalage + 1;
 	int tab2[tailleTab2];
 
 	// Initialisation
@@ -66,7 +57,7 @@ void countingSort(int taille, int tab[])
 	// Counting
 	for (size_t i = 0; i < taille; ++i)
 	{
-		++tab2[(tab[i]+decalage)];
+		++tab2[(tab[i] - decalage)];
 	}
 
 	// Sort
@@ -75,7 +66,7 @@ void countingSort(int taille, int tab[])
 	{
 		for(size_t j = 0; j < tab2[i]; ++j)
 		{
-			tab[index] = i-decalage;
+			tab[index] = i + decalage;
 			++index;
 		}
 	}
@@ -87,7 +78,7 @@ int main()
 	int taille = 40;
 	int nbInvert = 0; // Nombre d'echanges realises
 
-    cout << "--- Insertion Sort ---" << "\n" << "\n" << "Tableau d'origine " << taille << " :" << "\n";
+    cout << "--- Counting Sort ---" << "\n" << "\n" << "Tableau d'origine " << taille << " :" << "\n";
 	afficheTableau(taille, tab);
 
 	countingSort(taille, tab);
